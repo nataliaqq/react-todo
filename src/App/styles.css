@@ -1,8 +1,12 @@
 .App {
-  padding: 30px;
-  margin: 30px;
+  padding: 20px;
+  margin: 0px;
 }
 
 .App-link {
   color: #61dafb;
+}
+
+button {
+  font-size: 18px;
 }
