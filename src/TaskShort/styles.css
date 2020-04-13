@@ -1,0 +1,20 @@
+.task-label {
+  border: 1px solid grey;   
+  padding: 10px;
+}
+
+.to-rigth {
+  float: right;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.task-title {
+  font-weight: bold;
+}
+
+.labels-row.floated {
+  margin: 0px;
+  float: right;
+  padding: 0;
+}

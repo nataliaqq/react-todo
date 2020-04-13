@@ -1,0 +1,16 @@
+.to-right {
+    float: right;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.task-content {
+    background-color: rgb(27, 27, 27);
+    padding: 20px;
+}
+
+.task-title {
+    font-weight: bold;
+}

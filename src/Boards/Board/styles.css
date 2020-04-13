@@ -1,0 +1,11 @@
+.board {
+    flex-basis: 400px;
+    flex-shrink: 0;
+    border: 1px solid grey;
+}
+
+.board-title {
+    background-color: rgb(27, 27, 27);
+    padding: 10px;
+    border: 1px solid grey;
+}

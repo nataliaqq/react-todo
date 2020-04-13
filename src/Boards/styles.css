@@ -1,0 +1,25 @@
+.boards-label {
+    margin-bottom: 30px;
+}
+.boards-row {
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 100%;
+    overflow-x: scroll;
+}
+
+.board-name {
+    padding: 0 3px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.active-group {
+    font-weight: bold;
+    cursor: default;
+    text-decoration: none;
+}
