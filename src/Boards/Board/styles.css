@@ -1,5 +1,5 @@
 .board {
-    flex-basis: 400px;
+    flex-basis: 320px;
     flex-shrink: 0;
     border: 1px solid grey;
 }
