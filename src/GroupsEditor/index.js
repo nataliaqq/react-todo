@@ -3,33 +3,45 @@ import './styles.css'
 
 function GroupsEditor (props) {
 
-    const [ inputsCounter, setInputsCounter ] = useState(1)
-
-    const [ groupName, setGroupName ] = useState('')
-    const [ labelNames, setLabelNames ] = useState([])
+    const [ inputsCounter, setInputsCounter ] = useState(props.group && props.group.names.length > 0 ? props.group.names.length : 1)
+    const [ modifidedGroup, setModifidedGroup ] = useState(props.group ? props.group : { group: null, names: [] })
 
     const addInputHandler = () => {
         setInputsCounter(inputsCounter + 1)
     }
 
     const changeGroupNameHandler = (event) => {
-        setGroupName(event.target.value)
+        let group = {...modifidedGroup}
+        group.group = event.target.value
+
+        setModifidedGroup(group)
     }
 
     const changeLabelNameHandler = (index, event) => {
-        let labels = [...labelNames]
-        labels[index] = event.target.value
-        labels = labels.filter(label => label && label.length > 0) 
-        setLabelNames(labels)
+        let group = {...modifidedGroup}
+        group.names[index] = event.target.value
+        setModifidedGroup(group)
     }
 
-    const addGroupHandler = () => {
-        if (!groupName) return alert('no group name')
-        props.newGroupAdded({ group: groupName, names: labelNames })
+    const clickSaveGroupHandler = () => {
+        const idArray = props.groupList.map(group => group.id)
+        const max = idArray.length > 0 ? Math.max(...idArray) : 0
+        const newId = max ? max + 1 : 1
+        
+        let id = modifidedGroup.id ? modifidedGroup.id : newId
+        let group = { id: id, group: modifidedGroup.group, names: modifidedGroup.names }
+    
+        if (!group.group) return alert('no group name')
+        props.groupSaved(group)
     }
 
     const inputs = [...Array(inputsCounter)].map((x, index) => 
-        <input key={index} onChange={(event) => changeLabelNameHandler(index, event)} className="modal-label"></input>
+        <input
+            key={index}
+            value={modifidedGroup.names[index]}
+            onChange={(event) => changeLabelNameHandler(index, event)}
+            className="modal-label"
+        />
     )
     
     return (
@@ -40,12 +52,16 @@ function GroupsEditor (props) {
                 
                 <div className="modal-content">
                     <div onClick={props.closed} className="to-right">close</div>
-                    <input placeholder="new group" onChange={changeGroupNameHandler}></input>
+                    <input
+                        placeholder="new group"
+                        value={modifidedGroup ? modifidedGroup.group : ''}
+                        onChange={changeGroupNameHandler}
+                    />
                     labels:
                     { inputs }
                     <div className="add-more" onClick={addInputHandler}>+ more labels</div>
 
-                    <button onClick={addGroupHandler}>add</button>
+                    <button onClick={clickSaveGroupHandler}>add</button>
                 </div>
             </div>
         </div>
