@@ -14,15 +14,10 @@ function Boards(props) {
             setBoardsGroupName(group)
             setLabels(response.data.labels)
 
-            return response
+            setIsFirstLoadCompleted(response ? true : false)
         }
 
         fetch()
-        
-        .then(response => {
-            setIsFirstLoadCompleted(true)
-        })
-
     }, [])
 
     const [ labels, setLabels ] = useState([])
