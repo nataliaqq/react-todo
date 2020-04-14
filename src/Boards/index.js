@@ -8,12 +8,11 @@ function Boards(props) {
     useEffect(() => {
         const fetch = async () => {
             const api = new Api()
+            
             let response = await api.getLabels()
 
-            let group = response.data.labels[0] ? response.data.labels[0].group : null 
-            setBoardsGroupName(group)
+            setBoardsGroupName(response.data.labels[0] ? response.data.labels[0].group : null)
             setLabels(response.data.labels)
-
             setIsFirstLoadCompleted(response ? true : false)
         }
 
@@ -48,9 +47,9 @@ function Boards(props) {
     const changeGroupHandler = (newGroupName) => {
         setBoardsGroupName(newGroupName)
     }
-    const boards = group && group.names.map(name => 
+    const boards = group && group.names.map((name,index) => 
         <Board
-            key={name}
+            key={index}
             name={name}
             list={filterBoardTasks(name)}
             modeSwitched={modeSwitchHandler}
@@ -59,11 +58,11 @@ function Boards(props) {
 
     const isGroupActive = (groupName) => boardsGroupName === groupName
     const groupNamesArray = labels.map(group => group.group)
-    const groupNames = groupNamesArray.map(groupName =>
+    const groupNames = groupNamesArray.map((groupName, index) =>
         <div
             className={`inline board-name ${ isGroupActive(groupName) ? 'active-group' : null}`}
             onClick={() => changeGroupHandler(groupName)}
-            key={groupName}
+            key={index}
         >{ groupName }</div>
     )
 

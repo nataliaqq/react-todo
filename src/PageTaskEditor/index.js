@@ -92,18 +92,18 @@ function PageTaskEditor(props) {
         setSelectedLabels(selectedLabelsArray)
     }
 
-    const allLabels = labels && labels.map(group => 
+    const allLabels = labels && labels.map((group, index) => 
         <LabelsRow
             activeLabels={selectedLabels}
             labelClicked={labelClickHandler}
-            className="block"
+            className="inline"
             labels={group.names}
-            key={group.group}
+            key={index}
         />
     )
   
     return (
-        <div class="editor-content">
+        <div className="editor-content">
             <TaskValueInput
                 type='input'
                 valueName='name'
@@ -123,7 +123,7 @@ function PageTaskEditor(props) {
                 { allLabels }
             </div>
            
-            <button onClick={saveClickHandler}>save</button>
+            <button onClick={saveClickHandler}>{ props.task ? 'save' : 'add' }</button>
         </div>
     )
 }

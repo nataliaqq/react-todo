@@ -18,11 +18,13 @@ function GroupsEditor (props) {
 
     const changeLabelNameHandler = (index, event) => {
         let labels = [...labelNames]
-        labels[index] ? labels[index] = event.target.value : labels.push(event.target.value)
+        labels[index] = event.target.value
+        labels = labels.filter(label => label && label.length > 0) 
         setLabelNames(labels)
     }
 
     const addGroupHandler = () => {
+        if (!groupName) return alert('no group name')
         props.newGroupAdded({ group: groupName, names: labelNames })
     }
 

@@ -10,12 +10,13 @@ function LabelsRow (props) {
     const isLabelActive = (label) => {
         return props.activeLabels && props.activeLabels.find(item => item === label)
     }
-    const labels = props.labels.map(label => 
+    const labels = props.labels.map((label, index) => 
         <Label 
             clicked={labelClickHandler}
             labelName={label}
-            key={label}
-            isActive={isLabelActive(label)}/>
+            key={`${label}-${index}`}
+            isActive={isLabelActive(label)}
+        />
     )
 
     return (

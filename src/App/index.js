@@ -14,6 +14,7 @@ function App() {
       const api = new Api()
       let response = await api.getTodoList()  
       setTodoList(response.data.todoList)
+      setIsFirstLoadCompleted(response ? true : false)
     }
 
     fetch()
@@ -24,6 +25,7 @@ function App() {
   const [ mode, setMode ] = useState('editor') // task or editor
   const [ editedTaskId, setEditedTaskId ] = useState(null)
   const [ shownTaskId, setShownTaskId ] = useState(null)
+  const [ isFirstLoadCompleted, setIsFirstLoadCompleted ] = useState(false)
 
   useEffect(() => {
     const saveTodoList = () => {
@@ -32,8 +34,8 @@ function App() {
       api.updateTodoList(data)
     }
 
-    saveTodoList()
-  }, [todoList])
+    if (isFirstLoadCompleted) saveTodoList()
+  }, [todoList, isFirstLoadCompleted])
 
   const addTask = (task) => {
     let taskList = [...todoList]
@@ -87,7 +89,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Boards list={todoList} modeSwitched={modeSwitchHandler} />
-        
+
         { editor }
         { taskExpanded }
       </header>
