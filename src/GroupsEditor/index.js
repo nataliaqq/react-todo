@@ -31,8 +31,12 @@ function GroupsEditor (props) {
         let id = modifidedGroup.id ? modifidedGroup.id : newId
         let group = { id: id, group: modifidedGroup.group, names: modifidedGroup.names }
     
-        if (!group.group) return alert('no group name')
+        if (!group.group) return alert('no group title')
         props.groupSaved(group)
+    }
+
+    const deleteGroupHandler = () => {
+        props.groupDeleted(props.group)
     }
 
     const inputs = [...Array(inputsCounter)].map((x, index) => 
@@ -62,6 +66,11 @@ function GroupsEditor (props) {
                     <div className="add-more" onClick={addInputHandler}>+ more labels</div>
 
                     <button onClick={clickSaveGroupHandler}>add</button>
+                    {   
+                        props.group
+                            ? <div className="delete" onClick={deleteGroupHandler}>delete</div>
+                            : null
+                    }
                 </div>
             </div>
         </div>

@@ -41,3 +41,8 @@
 .modal-content button {
     margin-top: 30px;
 }
+
+.modal-content .delete {
+    text-decoration: underline;
+    margin-top: 30px;
+}

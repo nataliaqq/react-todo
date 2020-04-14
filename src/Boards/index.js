@@ -78,7 +78,7 @@ function Boards(props) {
         let groupIndex = groupArray.findIndex(group => group.id === newGroup.id)
 
         let filtredLabels = [...newGroup.names.filter(label => label && label.length > 0)]
-        let filtredGroup = {...newGroup, labels: filtredLabels }
+        let filtredGroup = {...newGroup, names: filtredLabels }
 
         if (groupIndex === -1) {
             addGroup(filtredGroup)
@@ -87,8 +87,6 @@ function Boards(props) {
         }
         setShowGroupsEditor({ show: false, group: null })
     }
-
-    // TODO delete
 
     const modifyGroup = (newGroup) => {
         let groupArray = [...labels]
@@ -108,9 +106,19 @@ function Boards(props) {
         setShowGroupsEditor({ show: false, group: null })
     }
 
+    const deleteGroupHandler = (deletedGroup) => {
+        let groupArray = [...labels]
+        let groupIndex = groupArray.findIndex(group => group.id === deletedGroup.id)
+
+        groupArray.splice(groupIndex, 1)
+        setLabels(groupArray)
+        setShowGroupsEditor({ show: false, group: null })
+    }
+
     const addNewGroupInput = showGroupsEditor.show
         ? <GroupsEditor
             groupSaved={saveGroupHandler}
+            groupDeleted={deleteGroupHandler}
             closed={closeHandler}
             group={showGroupsEditor.group}
             groupList={labels} />

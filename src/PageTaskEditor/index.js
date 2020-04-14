@@ -35,7 +35,7 @@ function PageTaskEditor(props) {
         let task = { id: id, name: modifidedTask['name'], body: modifidedTask['body'], labels: selectedLabels }
 
         if (!task.name) {
-            alert('no title error')
+            alert('no task title')
             return
         }
         
