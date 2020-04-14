@@ -10,8 +10,9 @@ function TaskShort(props) {
 
     return (
         <div className="task-label" onClick={expandTask}>
+            <div className="task-title">{ props.task.name }</div>
             <LabelsRow labels={props.task.labels} className="floated" />
-            <span className="task-title">{ props.task.name }</span>
+            
             
         </div>
     )

@@ -1,10 +1,12 @@
 .task-label {
   border: 1px solid grey;   
   padding: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .to-rigth {
-  float: right;
+  margin-left: auto;
   cursor: pointer;
   text-decoration: underline;
 }
@@ -17,4 +19,15 @@
   margin: 0px;
   float: right;
   padding: 0;
+  font-size: 11px;
+  max-width: 150px;
+}
+
+.labels-row.floated .label {
+    padding: 2px 9px;
+    margin: 1px 2px;
+    display: inline-block;
+    border: 1px solid grey;
+    border-radius: 7px;
+    line-height: 1;
 }
