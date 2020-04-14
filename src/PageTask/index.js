@@ -20,10 +20,9 @@ function PageTask(props) {
   
     return (
         <div className="task-content">
-            <div className="to-rigth">
-                <div onClick={openEditor} className="">edit</div>
-                <div onClick={closeEditor} className="">close</div>
-                <div onClick={deleteTask} className="">delete</div>
+            <div className="to-right">
+                <div onClick={openEditor} className="underline">edit</div>
+                <div onClick={closeEditor} className="underline">close</div>  
             </div>
             <div>
                 <div># { props.task.id }</div>
@@ -32,6 +31,8 @@ function PageTask(props) {
 
                 <div>{ labels } </div>
             </div>
+
+            <div onClick={deleteTask} className="underline delete">delete</div>
             
         </div>
     )
