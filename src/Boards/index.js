@@ -9,15 +9,24 @@ function Boards(props) {
         const fetch = async () => {
             const api = new Api()
             let response = await api.getLabels()
-            setBoardsGroupName(response.data.labels[0].group)
+
+            let group = response.data.labels[0] ? response.data.labels[0].group : null 
+            setBoardsGroupName(group)
             setLabels(response.data.labels)
+
+            return response
         }
 
         fetch()
+        
+        .then(response => {
+            setIsFirstLoadCompleted(true)
+        })
 
     }, [])
 
     const [ labels, setLabels ] = useState([])
+    const [ isFirstLoadCompleted, setIsFirstLoadCompleted ] = useState(false)
 
     useEffect(() => {
         const saveLabels = () => {
@@ -25,9 +34,9 @@ function Boards(props) {
           let data = { labels: labels }
           api.updateLabels(data)
         }
-    
-        saveLabels()
-      }, [labels])
+
+        if (isFirstLoadCompleted) saveLabels()
+      }, [labels, isFirstLoadCompleted])
 
     const modeSwitchHandler = (newMode, id) => {
         if (props.modeSwitched) props.modeSwitched(newMode, id)
