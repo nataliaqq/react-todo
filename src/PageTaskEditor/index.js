@@ -103,7 +103,7 @@ function PageTaskEditor(props) {
     )
   
     return (
-        <div>
+        <div class="editor-content">
             <TaskValueInput
                 type='input'
                 valueName='name'

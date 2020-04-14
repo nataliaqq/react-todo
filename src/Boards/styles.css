@@ -23,3 +23,16 @@
     cursor: default;
     text-decoration: none;
 }
+
+.add {
+    font-style: italic;
+}
+
+.add-new-group-row {
+    display: flex;
+    align-items: center;
+}
+
+.add-new-group-row input {
+    max-width: 200px;
+}

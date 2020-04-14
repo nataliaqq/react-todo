@@ -87,10 +87,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Boards list={todoList} modeSwitched={modeSwitchHandler} />
-
-        <br></br>
-        <hr></hr>
-        <br></br>
+        
         { editor }
         { taskExpanded }
       </header>

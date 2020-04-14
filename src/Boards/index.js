@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Board from './Board'
 import './styles.css'
 import Api from '../api/api'
+import GroupsEditor from '../GroupsEditor'
 
 function Boards(props) {    
     useEffect(() => {
@@ -16,12 +17,27 @@ function Boards(props) {
 
     }, [])
 
+    const [ labels, setLabels ] = useState([])
+
+    useEffect(() => {
+        const saveLabels = () => {
+          const api = new Api()
+          let data = { labels: labels }
+          api.updateLabels(data)
+        }
+    
+        saveLabels()
+      }, [labels])
+
     const modeSwitchHandler = (newMode, id) => {
         if (props.modeSwitched) props.modeSwitched(newMode, id)
     }
 
-    const [ labels, setLabels ] = useState([])
     const [ boardsGroupName, setBoardsGroupName] = useState([])
+
+    const [ showGroupsEditor, setShowGroupsEditor] = useState(false)
+
+
     const group = labels.find(group => group.group === boardsGroupName)
     const filterBoardTasks = (boardName) => props.list.filter(task => task.labels.find(label => label === boardName))
    
@@ -47,10 +63,31 @@ function Boards(props) {
         >{ groupName }</div>
     )
 
+    const addGroupHandler = () => {
+        setShowGroupsEditor(!showGroupsEditor)
+    }
+
+    const addNewGroupHandler = (newGroup) => {
+        let lab = [...labels]
+        lab.push(newGroup)
+        setLabels(lab)
+        closeHandler()
+    }
+
+    const closeHandler = () => {
+        setShowGroupsEditor(false)
+    }
+
+    const addNewGroupInput = showGroupsEditor ? <GroupsEditor newGroupAdded={addNewGroupHandler} closed={closeHandler}/> : null
+
     return (
         <div>
 
-            <div className="boards-label">boards by group: { groupNames }</div>
+            <div className="boards-label">
+                { groupNames } <div className="inline add" onClick={addGroupHandler}>(+add new)</div>
+            </div> 
+
+            { addNewGroupInput }
 
             <div className="boards-row">
                 { boards }

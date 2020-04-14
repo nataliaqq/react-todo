@@ -2,10 +2,17 @@
     flex-basis: 320px;
     flex-shrink: 0;
     border: 1px solid grey;
+    height: 400px;
+    overflow-y: scroll;
+    position: relative;
+    
 }
 
 .board-title {
     background-color: rgb(27, 27, 27);
     padding: 10px;
     border: 1px solid grey;
+    position: sticky;
+    top: 0;
+    width: 100%;
 }
