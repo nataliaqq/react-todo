@@ -3,14 +3,22 @@ import './styles.css'
 
 import Label from './Label'
 
-function LabelsRow (props) {
-    const labelClickHandler = (labelName) => {
+interface LabelsRowProps {
+    activeLabels: string[] | null
+    labelClicked: (labelName: string) => void
+    className: string
+    labels: string[]
+    key: number
+}
+
+function LabelsRow (props: LabelsRowProps) {
+    const labelClickHandler = (labelName: string) => {
         if (props.labelClicked) return props.labelClicked(labelName)
     }
-    const isLabelActive = (label) => {
-        return props.activeLabels && props.activeLabels.find(item => item === label)
+    const isLabelActive = (label: string) => {
+        return !!props.activeLabels && !!props.activeLabels.find(item => item === label)
     }
-    const labels = props.labels.map((label, index) => 
+    const labels = props.labels.map((label: string, index: number) => 
         <Label 
             clicked={labelClickHandler}
             labelName={label}

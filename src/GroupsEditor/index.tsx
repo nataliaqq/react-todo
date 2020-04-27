@@ -1,30 +1,39 @@
-import React, {useState} from 'react'
+import React, {useState, ChangeEvent} from 'react'
 import './styles.css'
 
-function GroupsEditor (props) {
+import { Group } from '../types'
 
-    const [ inputsCounter, setInputsCounter ] = useState(props.group && props.group.names.length > 0 ? props.group.names.length : 1)
-    const [ modifidedGroup, setModifidedGroup ] = useState(props.group ? props.group : { group: null, names: [] })
+interface GroupEditorProps {
+    groupSaved: (newGroup: Group) => void
+    groupDeleted: (newGroup: Group) => void
+    closed: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+    group?: Group
+    groupList: Group[]
+}
+function GroupsEditor (props: GroupEditorProps) {
+
+    const [ inputsCounter, setInputsCounter ] = useState<number>(props.group && props.group.names.length > 0 ? props.group.names.length : 1)
+    const [ modifidedGroup, setModifidedGroup ] = useState<Group>(props.group ? props.group : { id: null, group: '', names: [] })
 
     const addInputHandler = () => {
         setInputsCounter(inputsCounter + 1)
     }
 
-    const changeGroupNameHandler = (event) => {
-        let group = {...modifidedGroup}
+    const changeGroupNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        let group: Group = {...modifidedGroup as Group}
         group.group = event.target.value
 
         setModifidedGroup(group)
     }
 
-    const changeLabelNameHandler = (index, event) => {
+    const changeLabelNameHandler = (index: number, event: ChangeEvent<HTMLInputElement>) => {
         let group = {...modifidedGroup}
         group.names[index] = event.target.value
         setModifidedGroup(group)
     }
 
     const clickSaveGroupHandler = () => {
-        const idArray = props.groupList.map(group => group.id)
+        const idArray: number[] = props.groupList.map(group => group.id ? group.id : 0)
         const max = idArray.length > 0 ? Math.max(...idArray) : 0
         const newId = max ? max + 1 : 1
         
@@ -36,7 +45,7 @@ function GroupsEditor (props) {
     }
 
     const deleteGroupHandler = () => {
-        props.groupDeleted(props.group)
+        if (props.group) props.groupDeleted(props.group)
     }
 
     const inputs = [...Array(inputsCounter)].map((x, index) => 

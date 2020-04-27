@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Board from './Board'
 import './styles.css'
-import Api from '../api/api'
+import Api from '../api'
 import GroupsEditor from '../GroupsEditor'
 
-function Boards(props) {    
+import { Group, Task} from '../types'
+
+function Boards(props: {list: Task[], modeSwitched: (newMode: string, id?: number ) => void }) {    
     useEffect(() => {
         const fetch = async () => {
             const api = new Api()
@@ -19,8 +21,10 @@ function Boards(props) {
         fetch()
     }, [])
 
-    const [ labels, setLabels ] = useState([])
-    const [ isFirstLoadCompleted, setIsFirstLoadCompleted ] = useState(false)
+    const [ labels, setLabels ] = useState<Group[]>([])
+    const [ isFirstLoadCompleted, setIsFirstLoadCompleted ] = useState<boolean>(false)
+    const [ boardsGroupId, setBoardsGroupId] = useState<number | null>(null)
+    const [ showGroupsEditor, setShowGroupsEditor] = useState<{ show: boolean, group?: Group }>({ show: false, group: undefined })
 
     useEffect(() => {
         const saveLabels = () => {
@@ -32,26 +36,26 @@ function Boards(props) {
         if (isFirstLoadCompleted) saveLabels()
     }, [labels, isFirstLoadCompleted])
 
-    const modeSwitchHandler = (newMode, id) => {
-        if (props.modeSwitched) props.modeSwitched(newMode, id)
+    const modeSwitchHandler = (newMode: string, id?: number) => {
+        props.modeSwitched(newMode, id ? id : undefined)
     }
 
-    const [ boardsGroupId, setBoardsGroupId] = useState(null)
-    const [ showGroupsEditor, setShowGroupsEditor] = useState({ show: false, group: null })
-
     const group = labels.find(group => group.id === boardsGroupId)
-    const filterBoardTasks = (boardName) => props.list.filter(task => task.labels.find(label => label === boardName))
+    const filterBoardTasks = (boardName: string) => {
+        let list: Task[] = props.list.filter(task => task.labels.find(label => label === boardName))
+        return list
+    }
    
-    const changeGroupHandler = (group) => {
+    const changeGroupHandler = (group: Group) => {
         setBoardsGroupId(group.id)
     }
 
-    const openEditorHandler = (group) => {
+    const openEditorHandler = (group: Group) => {
         setShowGroupsEditor({ show: true, group: group })
     }
 
     const clickAddGroupHandler = () => {
-        setShowGroupsEditor({ show: true, group: null })
+        setShowGroupsEditor({ show: true })
     }
 
     const boards = group && group.names.map((name,index) => 
@@ -63,9 +67,9 @@ function Boards(props) {
         />
     )
 
-    const isGroupActive = (group) => boardsGroupId === group.id
+    const isGroupActive = (group: Group) => boardsGroupId === group.id
     
-    const groupNames = labels.map((group, index) =>
+    const groupNames = labels.map((group: Group, index: number) =>
         <div
             className={`inline board-name ${ isGroupActive(group) ? 'active-group' : null}`}
             onClick={() => isGroupActive(group) ? openEditorHandler(group) : changeGroupHandler(group)}
@@ -73,7 +77,7 @@ function Boards(props) {
         >{ group.group }</div>
     )
 
-    const saveGroupHandler = (newGroup) => {
+    const saveGroupHandler = (newGroup: Group) => {
         let groupArray = [...labels]
         let groupIndex = groupArray.findIndex(group => group.id === newGroup.id)
 
@@ -85,10 +89,10 @@ function Boards(props) {
         } else {
             modifyGroup(filtredGroup)
         }
-        setShowGroupsEditor({ show: false, group: null })
+        setShowGroupsEditor({ show: false })
     }
 
-    const modifyGroup = (newGroup) => {
+    const modifyGroup = (newGroup: Group) => {
         let groupArray = [...labels]
         let groupIndex = groupArray.findIndex(group => group.id === newGroup.id)
         
@@ -96,23 +100,23 @@ function Boards(props) {
         setLabels(groupArray)
     }
 
-    const addGroup = (newGroup) => {
-        let groupArray = [...labels]
-        groupArray.push(newGroup)
-        setLabels(groupArray)
+    const addGroup = (newGroup: Group) => {
+        let groupArray: Group[] = [...labels]
+        groupArray.push(newGroup as Group)
+        setLabels(groupArray as Group[])
     }
 
     const closeHandler = () => {
-        setShowGroupsEditor({ show: false, group: null })
+        setShowGroupsEditor({ show: false })
     }
 
-    const deleteGroupHandler = (deletedGroup) => {
+    const deleteGroupHandler = (deletedGroup: Group) => {
         let groupArray = [...labels]
         let groupIndex = groupArray.findIndex(group => group.id === deletedGroup.id)
 
         groupArray.splice(groupIndex, 1)
         setLabels(groupArray)
-        setShowGroupsEditor({ show: false, group: null })
+        setShowGroupsEditor({ show: false })
     }
 
     const addNewGroupInput = showGroupsEditor.show

@@ -1,11 +1,13 @@
 import React from 'react'
 import TaskShort from '../../TaskShort'
 
+import { Task } from '../../types'
+
 import './styles.css'
 
-function Board(props) {
-    const modeSwitchHandler = (newMode, id) => {
-        if (props.modeSwitched) props.modeSwitched(newMode, id)
+function Board(props: { key: number, name: string, list: Task[], modeSwitched: (newMode: string, id?: number ) => void}) {
+    const modeSwitchHandler = (newMode: string, id?: number) => {
+        props.modeSwitched(newMode as string, id ? id as number : undefined)
     }
 
     const tasks = props.list.map(task => 

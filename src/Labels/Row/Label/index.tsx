@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.css'
 
-function Label (props) {
+function Label (props: { labelName: string, clicked: (labelName: string) => void, isActive: boolean}) {
     const clickHandler = () => {
         if (props.clicked) {
             return props.clicked(props.labelName)

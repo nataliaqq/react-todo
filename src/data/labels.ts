@@ -1,5 +1,5 @@
-
-const findGroupName = (label, src) => {
+import { Group } from '../types'
+const findGroupName = (label: string, src: Group[]) => {
   let found
   src.forEach(group => {
       if (group.names.find(name => name === label)) {

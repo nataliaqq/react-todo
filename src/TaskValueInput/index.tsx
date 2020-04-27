@@ -1,7 +1,15 @@
 import React from 'react'
 import './styles.css'
 
-function TaskValueInput(props) {
+interface TaskValueInputProps {
+  type: string
+  valueName: string
+  value: string
+  key: string
+  changed: (event: React.ChangeEvent) => void
+}
+
+function TaskValueInput(props: TaskValueInputProps) {
         let input = null
 
         if (props.type === 'input') {
