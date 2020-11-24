@@ -1,3 +1,5 @@
+This is a simple board-style task manager. You can add/edit/delete tasks, add new board and tags (labels).
+
 ## DEMO
 See demo here: https://heuristic-brattain-a2d371.netlify.app/
 
