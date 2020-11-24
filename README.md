@@ -1,5 +1,5 @@
 ## DEMO
-https://heuristic-brattain-a2d371.netlify.app/
+See demo here: https://heuristic-brattain-a2d371.netlify.app/
 
 This is a propotype application, all data are loaded and stored in open web storage (https://jsonstorage.net/)
 
