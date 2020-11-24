@@ -1,6 +1,9 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## DEMO
+https://heuristic-brattain-a2d371.netlify.app/
 
-## Available Scripts
+This is a propotype application, all data are loaded and stored in open web storage (https://jsonstorage.net/)
+
+## Install
 
 In the project directory, you can run:
 
